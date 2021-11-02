@@ -12,6 +12,7 @@ namespace HPspeed
 {
     public class HPspeed : MelonMod
     {
+        private const int Tops = 9;
         private Scene scene;
         public Data SharedData;
         private readonly MemoryMappedFile MemoryFile = MemoryMappedFile.CreateOrOpen("HousePartyMemoryFile", 1024);
@@ -30,10 +31,10 @@ namespace HPspeed
         private StephanieCharacter Stephanie;
         private VickieCharacter Vickie;
         private PlayerCharacter Player;
-        private Vector3 LastPos = new Vector3();
         private GameManager gamer;
         private bool ShownPause = false;
         private bool ShownUnPause = false;
+        private int TimesPaused = 0;
 
 
         public override void OnApplicationStart()
@@ -93,7 +94,6 @@ namespace HPspeed
                 Vickie = Object.FindObjectOfType<VickieCharacter>();
                 Player = Object.FindObjectOfType<PlayerCharacter>();
                 gamer = Object.FindObjectOfType<GameManager>();
-                LastPos = Player.PlayerRootTransform.position;
             }
 
             return data;
@@ -107,75 +107,180 @@ namespace HPspeed
 
             if (data.GameMain) // in game
             {
-                for (int i = 0; i < 7; i++)
+                if (Amy != null)
                 {
-                    if (Amy != null)
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.AmyClothes |= Amy.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.AmyClothes &= Amy.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Ashley != null)
+                    }*/
+                }
+                else
+                {
+                    Amy = Object.FindObjectOfType<AmyCharacter>();
+                }
+
+                if (Ashley != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.AshleyClothes |= Ashley.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.AshleyClothes &= Ashley.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Brittney != null)
+                    }*/
+                }
+                else
+                {
+                    Ashley = Object.FindObjectOfType<AshleyCharacter>();
+                }
+
+                if (Brittney != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.BrittneyClothes |= Brittney.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.BrittneyClothes &= Brittney.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Derek != null)
+                    }*/
+                }
+                else
+                {
+                    Brittney = Object.FindObjectOfType<BrittneyCharacter>();
+                }
+
+                if (Derek != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.DerekClothes |= Derek.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.DerekClothes &= Derek.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
+                    }*/
+                }
+                else
+                {
+                    Derek = Object.FindObjectOfType<DerekCharacter>();
+                }
 
-                    if (Frank != null)
+                if (Frank != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.FrankClothes |= Frank.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.FrankClothes &= Frank.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Katherine != null)
+                    }*/
+                }
+                else
+                {
+                    Frank = Object.FindObjectOfType<FrankCharacter>();
+                }
+
+                if (Katherine != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.KatherineClothes |= Katherine.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.KatherineClothes &= Katherine.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Leah != null)
+                    }*/
+                }
+                else
+                {
+                    Katherine = Object.FindObjectOfType<KatherineCharacter>();
+                }
+
+                if (Leah != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.LeahClothes |= Leah.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.LeahClothes &= Leah.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Lety != null)
+                    }*/
+                }
+                else
+                {
+                    Leah = Object.FindObjectOfType<LeahCharacter>();
+                }
+
+                if (Lety != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.LetyClothes |= Lety.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.LetyClothes &= Lety.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Madison != null)
+                    }*/
+                }
+                else
+                {
+                    Lety = Object.FindObjectOfType<LetyCharacter>();
+                }
+
+                if (Madison != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.MadisonClothes |= Madison.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.MadisonClothes &= Madison.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Patrick != null)
+                    }*/
+                }
+                else
+                {
+                    Madison = Object.FindObjectOfType<MadisonCharacter>();
+                }
+
+                if (Patrick != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.PatrickClothes |= Patrick.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.PatrickClothes &= Patrick.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Rachael != null)
+                    }*/
+                }
+                else
+                {
+                    Patrick = Object.FindObjectOfType<PatrickCharacter>();
+                }
+
+                if (Rachael != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.RachaelClothes |= Rachael.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.RachaelClothes &= Rachael.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Stephanie != null)
+                    }*/
+                }
+                else
+                {
+                    Rachael = Object.FindObjectOfType<RachaelCharacter>();
+                }
+
+                if (Stephanie != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.StephanieClothes |= Stephanie.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.StephanieClothes &= Stephanie.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
-                    if (Vickie != null)
+                    }*/
+                }
+                else
+                {
+                    Stephanie = Object.FindObjectOfType<StephanieCharacter>();
+                }
+
+                if (Vickie != null)
+                {
+                    /*for (int i = 0; i < 7; i++)
                     {
                         data.VickieClothes |= Vickie.Clothes.IsWearing((ClothingTypes)i, 0) ? (1 << i) : 0;
                         data.VickieClothes &= Vickie.Clothes.IsWearing((ClothingTypes)i, 0) ? ~0 : ~(1 << i);
-                    }
+                    }*/
                 }
+                else
+                {
+                    Vickie = Object.FindObjectOfType<VickieCharacter>();
+                }
+
+                if (Player == null)
+                {
+                    Player = Object.FindObjectOfType<PlayerCharacter>();
+                }
+
 
                 if (Amy != null) data.AmyTopless = Amy.EvaluateIsTopless;
                 if (Ashley != null) data.AshleyTopless = Ashley.EvaluateIsTopless;
@@ -188,26 +293,15 @@ namespace HPspeed
                 if (Stephanie != null) data.StephanieTopless = Stephanie.EvaluateIsTopless;
                 if (Vickie != null) data.VickieTopless = Vickie.EvaluateIsTopless;
 
-                data.InMenu = gamer.IsPaused;
-
-                if (data.InMenu && !ShownPause)
+                if (Player != null)
                 {
-                    MelonLogger.Msg("Game Paused!");
-                    ShownPause = true;
-                    ShownUnPause = false;
-                }
-                else if (!data.InMenu && !ShownUnPause)
-                {
-                    MelonLogger.Msg("Game Unpaused!");
-                    ShownUnPause = true;
-                    ShownPause = false;
-                }
+                    if (Player.GetSpeed != 0f && !data.PlayerMoved && TimesPaused == 1)
+                    {
+                        data.PlayerMoved = true;
+                        data.Time = 0;
 
-                //Amy.Intimacy.Came;
-
-                if (Player.PlayerRootTransform.position != LastPos)
-                {
-                    data.PlayerMoved = true;
+                        MelonLogger.Msg("Run started");
+                    }
                 }
 
                 data.TotalTime += Time.deltaTime;
@@ -216,14 +310,26 @@ namespace HPspeed
                 {
                     data.Time += Time.deltaTime;
                 }
-
             }
 
-            /*else if (data.MainMenu || data.LoadingScreen || data.InMenu) //loading/pausing
+
+            if(gamer != null) data.InMenu = gamer.IsPaused;
+
+            if (data.InMenu && !ShownPause)
             {
-
+                MelonLogger.Msg("Game Paused!");
+                ShownPause = true;
+                ShownUnPause = false;
+                TimesPaused++;
+                MelonLogger.Msg(data.AmyTopless.ToString());
             }
-            */
+            else if (!data.InMenu && !ShownUnPause)
+            {
+                MelonLogger.Msg("Game Unpaused!");
+                ShownUnPause = true;
+                ShownPause = false;
+            }
+
             return data;
         }
     }
