@@ -1,6 +1,4 @@
 ﻿using EekCharacterEngine;
-using EekCharacterEngine.Interaction;
-using EekEvents;
 using HouseParty;
 using HPdata;
 using MelonLoader;
@@ -15,7 +13,7 @@ namespace HPspeed
         private const int Tops = 9;
         private Scene scene;
         public Data SharedData;
-        private readonly MemoryMappedFile MemoryFile = MemoryMappedFile.CreateOrOpen("HousePartyMemoryFile", 1024);
+        private readonly MemoryMappedFile MemoryFile = MemoryMappedFile.CreateOrOpen("HousePartyMemoryFile", 2048);
         private MemoryMappedViewAccessor Accessor;
         private AmyCharacter Amy;
         private AshleyCharacter Ashley;
@@ -60,25 +58,29 @@ namespace HPspeed
 
 
             Accessor.Write(0, ref SharedData);
+            //MelonLogger.Msg(SharedData.ToString());
+
+            //Accessor.Read(0, out SharedData);
+            //MelonLogger.Msg(SharedData.ToString());
         }
 
         private Data InitData(Data data)
         {
             MelonLogger.Msg($"Writing from scene {scene.name}");
-            data.GameMain = scene.name == "GameMain";
-            data.MainMenu = scene.name == "MainMenu";
-            data.LoadingScreen = scene.name == "LoadingScreen";
-            data.PlayerMoved = false;
+            data.GameMain = scene.name == "GameMain" ? 1 : 0;
+            data.MainMenu = scene.name == "MainMenu" ? 1 : 0;
+            data.LoadingScreen = scene.name == "LoadingScreen" ? 1 : 0;
+            data.PlayerMoved = 0;
 
-            if (data.GameMain)
+            if (data.GameMain == 1)
             {
-                unsafe
+                /*unsafe
                 {
                     for (int i = 0; i < ApplicationManager.Version.Length; i++)
                     {
                         *(data.GameVersion + sizeof(char) * i) = ApplicationManager.Version.ToCharArray()[i];
                     }
-                }
+                }*/
                 Amy = Object.FindObjectOfType<AmyCharacter>();
                 Ashley = Object.FindObjectOfType<AshleyCharacter>();
                 Brittney = Object.FindObjectOfType<BrittneyCharacter>();
@@ -101,11 +103,11 @@ namespace HPspeed
 
         private Data SetData(Data data)
         {
-            data.GameMain = scene.name == "GameMain";
-            data.MainMenu = scene.name == "MainMenu";
-            data.LoadingScreen = scene.name == "LoadingScreen";
+            data.GameMain = scene.name == "GameMain" ? 1 : 0;
+            data.MainMenu = scene.name == "MainMenu" ? 1 : 0;
+            data.LoadingScreen = scene.name == "LoadingScreen" ? 1 : 0;
 
-            if (data.GameMain) // in game
+            if (data.GameMain == 1) // in game
             {
                 if (Amy != null)
                 {
@@ -282,48 +284,44 @@ namespace HPspeed
                 }
 
 
-                if (Amy != null) data.AmyTopless = Amy.EvaluateIsTopless;
-                if (Ashley != null) data.AshleyTopless = Ashley.EvaluateIsTopless;
-                if (Brittney != null) data.BrittneyTopless = Brittney.EvaluateIsTopless;
-                if (Katherine != null) data.KatherineTopless = Katherine.EvaluateIsTopless;
-                if (Leah != null) data.LeahTopless = Leah.EvaluateIsTopless;
-                if (Lety != null) data.LetyTopless = Lety.EvaluateIsTopless;
-                if (Madison != null) data.MadisonTopless = Madison.EvaluateIsTopless;
-                if (Rachael != null) data.RachaelTopless = Rachael.EvaluateIsTopless;
-                if (Stephanie != null) data.StephanieTopless = Stephanie.EvaluateIsTopless;
-                if (Vickie != null) data.VickieTopless = Vickie.EvaluateIsTopless;
+                if (Amy != null) data.AmyTopless = Amy.EvaluateIsTopless ? 1 : 0;
+                if (Ashley != null) data.AshleyTopless = Ashley.EvaluateIsTopless ? 1 : 0;
+                if (Brittney != null) data.BrittneyTopless = Brittney.EvaluateIsTopless ? 1 : 0;
+                if (Katherine != null) data.KatherineTopless = Katherine.EvaluateIsTopless ? 1 : 0;
+                if (Leah != null) data.LeahTopless = Leah.EvaluateIsTopless ? 1 : 0;
+                if (Lety != null) data.LetyTopless = Lety.EvaluateIsTopless ? 1 : 0;
+                if (Madison != null) data.MadisonTopless = Madison.EvaluateIsTopless ? 1 : 0;
+                if (Rachael != null) data.RachaelTopless = Rachael.EvaluateIsTopless ? 1 : 0;
+                if (Stephanie != null) data.StephanieTopless = Stephanie.EvaluateIsTopless ? 1 : 0;
+                if (Vickie != null) data.VickieTopless = Vickie.EvaluateIsTopless ? 1 : 0;
 
                 if (Player != null)
                 {
-                    if (Player.GetSpeed != 0f && !data.PlayerMoved && TimesPaused == 1)
+                    if (Player.GetSpeed != 0f && data.PlayerMoved == 0 && TimesPaused == 1)
                     {
-                        data.PlayerMoved = true;
-                        data.Time = 0;
+                        data.PlayerMoved = 1;
+                        data.DeltaTime = 0;
 
                         MelonLogger.Msg("Run started");
                     }
                 }
 
                 data.TotalTime += Time.deltaTime;
-
-                if (!data.InMenu && data.PlayerMoved)
-                {
-                    data.Time += Time.deltaTime;
-                }
+                data.DeltaTime = Time.deltaTime;
             }
 
 
-            if(gamer != null) data.InMenu = gamer.IsPaused;
+            if (gamer != null) data.InMenu = gamer.IsPaused ? 1 : 0;
 
-            if (data.InMenu && !ShownPause)
+            if (data.InMenu == 1 && !ShownPause)
             {
                 MelonLogger.Msg("Game Paused!");
                 ShownPause = true;
                 ShownUnPause = false;
                 TimesPaused++;
-                MelonLogger.Msg(data.AmyTopless.ToString());
+                //MelonLogger.Msg(data.AmyTopless.ToString());
             }
-            else if (!data.InMenu && !ShownUnPause)
+            else if (data.InMenu == 0 && !ShownUnPause)
             {
                 MelonLogger.Msg("Game Unpaused!");
                 ShownUnPause = true;

@@ -1,13 +1,18 @@
-﻿namespace HPdata
+﻿using System.Runtime.InteropServices;
+
+namespace HPdata
 {
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Data
     {
 #pragma warning disable IDE0044 // Add readonly modifier
-        public float Time;
+        public float DeltaTime;
         public float TotalTime;
-        public bool LoadingScreen;
-        public bool GameMain;
-        public bool MainMenu;
+        public int LoadingScreen;
+        public int GameMain;
+        public int MainMenu;
+        public int PlayerMoved;
+        public int InMenu;
         public int AmyClothes;
         public int AshleyClothes;
         public int BrittneyClothes;
@@ -21,19 +26,22 @@
         public int RachaelClothes;
         public int StephanieClothes;
         public int VickieClothes;
-        public bool AmyTopless;
-        public bool AshleyTopless;
-        public bool BrittneyTopless;
-        public bool KatherineTopless;
-        public bool LeahTopless;
-        public bool LetyTopless;
-        public bool MadisonTopless;
-        public bool RachaelTopless;
-        public bool StephanieTopless;
-        public bool VickieTopless;
-        public bool PlayerMoved;
-        public bool InMenu;
-        unsafe public fixed char GameVersion[30];
+        public int AmyTopless;
+        public int AshleyTopless;
+        public int BrittneyTopless;
+        public int KatherineTopless;
+        public int LeahTopless;
+        public int LetyTopless;
+        public int MadisonTopless;
+        public int RachaelTopless;
+        public int StephanieTopless;
+        public int VickieTopless;
+        //unsafe public fixed char GameVersion[30];
 #pragma warning restore IDE0044 // Add readonly modifier
+
+        public override string ToString()
+        {
+            return $"DT: {DeltaTime} TT: {TotalTime} LS: {LoadingScreen} GM: {GameMain} MM: {MainMenu} IM: {InMenu} PM: {PlayerMoved}";
+        }
     }
 }
