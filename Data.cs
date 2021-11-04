@@ -8,40 +8,41 @@ namespace HPdata
 #pragma warning disable IDE0044 // Add readonly modifier
         public float DeltaTime;
         public float TotalTime;
-        public int LoadingScreen;
-        public int GameMain;
-        public int MainMenu;
-        public int PlayerMoved;
-        public int InMenu;
-        public int AmyClothes;
-        public int AshleyClothes;
-        public int BrittneyClothes;
-        public int DerekClothes;
-        public int FrankClothes;
-        public int KatherineClothes;
-        public int LeahClothes;
-        public int LetyClothes;
-        public int MadisonClothes;
-        public int PatrickClothes;
-        public int RachaelClothes;
-        public int StephanieClothes;
-        public int VickieClothes;
-        public int AmyTopless;
-        public int AshleyTopless;
-        public int BrittneyTopless;
-        public int KatherineTopless;
-        public int LeahTopless;
-        public int LetyTopless;
-        public int MadisonTopless;
-        public int RachaelTopless;
-        public int StephanieTopless;
-        public int VickieTopless;
+        public byte IsLoadingScreen;
+        public byte IsGameMain;
+        public byte IsMainMenu;
+        public byte HasPlayerMoved;
+        public byte IsInMenu;
+        public byte IsRestart;
+        public byte AmyClothes;
+        public byte AshleyClothes;
+        public byte BrittneyClothes;
+        public byte DerekClothes;
+        public byte FrankClothes;
+        public byte KatherineClothes;
+        public byte LeahClothes;
+        public byte LetyClothes;
+        public byte MadisonClothes;
+        public byte PatrickClothes;
+        public byte RachaelClothes;
+        public byte StephanieClothes;
+        public byte VickieClothes;
+        public byte IsAmyTopless;
+        public byte IsAshleyTopless;
+        public byte IsBrittneyTopless;
+        public byte IsKatherineTopless;
+        public byte IsLeahTopless;
+        public byte IsLetyTopless;
+        public byte IsMadisonTopless;
+        public byte IsRachaelTopless;
+        public byte IsStephanieTopless;
+        public byte IsVickieTopless;
         //unsafe public fixed char GameVersion[30];
 #pragma warning restore IDE0044 // Add readonly modifier
 
         public override string ToString()
         {
-            return $"DT: {DeltaTime} TT: {TotalTime} LS: {LoadingScreen} GM: {GameMain} MM: {MainMenu} IM: {InMenu} PM: {PlayerMoved}";
+            return $"DT: {DeltaTime} TT: {TotalTime} LS: {IsLoadingScreen} GM: {IsGameMain} MM: {IsMainMenu} IM: {IsInMenu} PM: {HasPlayerMoved}";
         }
     }
 }
